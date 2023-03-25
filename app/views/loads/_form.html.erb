@@ -1,0 +1,47 @@
+<%= form_with(model: load) do |form| %>
+  <% if load.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(load.errors.count, "error") %> prohibited this load from being saved:</h2>
+
+      <ul>
+        <% load.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :pickup_location, style: "display: block" %>
+    <%= form.text_area :pickup_location, rows: 2, cols: 60 %>
+  </div>
+
+  <div>
+    <%= form.label :delivery_location, style: "display: block" %>
+    <%= form.text_area :delivery_location, rows: 2, cols: 60 %>
+  </div>
+
+  <div>
+    <%= form.label :pickup_date, style: "display: block" %>
+    <%= form.date_field :pickup_date %>
+  </div>
+
+  <div>
+    <%= form.label :equipment_type, style: "display: block" %>
+    <%= form.text_field :equipment_type %>
+  </div>
+
+  <div>
+    <%= form.label :shipper_phone, style: "display: block" %>
+    <%= form.text_field :shipper_phone %>
+  </div>
+
+  <div>
+    <%= form.label :shipper_email, style: "display: block" %>
+    <%= form.text_field :shipper_email %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

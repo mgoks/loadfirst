@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @load %>
+
+<div>
+  <%= link_to "Edit this load", edit_load_path(@load) %> |
+  <%= link_to "Back to loads", loads_path %>
+
+  <%= button_to "Destroy this load", @load, method: :delete %>
+</div>
