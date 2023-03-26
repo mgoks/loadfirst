@@ -1,12 +1,13 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Read about fixtures at
+# https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  pickup_location: MyString
-  delivery_location: MyString
+yoskars_load:
+  pickup_location: 1234 NW Bobcat Lane, St. Robert, MO 65584-5678
+  delivery_location: Global Co. 90210 Broadway Blvd. Nashville, TN 37011-5678
   pickup_date: 2023-03-25
-  equipment_type: MyString
-  shipper_phone: MyString
-  shipper_email: MyString
+  equipment_type: dry_van
+  shipper_phone: 4388319167
+  shipper_email: yoskar.sorante@gmail.com
 
 two:
   pickup_location: MyString

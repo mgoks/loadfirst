@@ -2,7 +2,7 @@ require "test_helper"
 
 class LoadsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @load = loads(:one)
+    @load = loads(:yoskars_load)
   end
 
   test "should get index" do
@@ -17,7 +17,16 @@ class LoadsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create load" do
     assert_difference("Load.count") do
-      post loads_url, params: { load: { delivery_location: @load.delivery_location, equipment_type: @load.equipment_type, pickup_date: @load.pickup_date, pickup_location: @load.pickup_location, shipper_email: @load.shipper_email, shipper_phone: @load.shipper_phone } }
+      post loads_url, params: { 
+        load: { 
+          delivery_location: @load.delivery_location,
+          equipment_type: @load.equipment_type,
+          pickup_date: @load.pickup_date,
+          pickup_location: @load.pickup_location,
+          shipper_email: @load.shipper_email,
+          shipper_phone: @load.shipper_phone 
+        } 
+      }
     end
 
     assert_redirected_to load_url(Load.last)
@@ -45,4 +54,8 @@ class LoadsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to loads_url
   end
+
+  # todo Add more unit tests.
+  # Add test data to test/fixtures/loads.yml.
+  
 end
