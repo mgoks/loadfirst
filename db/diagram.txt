@@ -1,0 +1,153 @@
+////////////////////////////////////////////////////////////////////////////////
+https://dbdiagram.io/d/642209cd5758ac5f17249058
+/*
+The type parameter is normally one of the migrations native types, which is one 
+of the following: 
+:bigint, 
+:binary, 
+:blob, 
+:boolean
+:date, 
+:datetime, 
+:decimal, 
+:float, 
+:integer, 
+:numeric, 
+:primary_key, 
+:string, 
+:text, 
+:time, 
+.
+
+Rails Schema Conventions
+https://guides.rubyonrails.org/active_record_basics.html#schema-conventions
+*/
+
+//// -- LEVEL 1
+//// -- Schemas, Tables and References
+
+/* TODO
+
+*/
+
+Table brokers {
+  /*
+  Model: Broker
+  has many orders, users
+  */
+  address string    
+  country integer [Note: 'enum']    
+  email string      
+  id integer [primary key]
+  mc string
+  name string       
+  phone string
+  usdot string
+  Note: '''
+    Model: Broker
+    * has many orders, users
+  '''
+}
+
+Table carriers {
+  /*
+  Model: Carrier
+  has many users
+  has and belongs to many orders
+  */
+  address string    
+  country integer [Note: 'enum']    
+  email string      
+  id integer [primary key]
+  mc string
+  name string       
+  phone string
+  usdot string
+  Note: '''
+    Model: Carrier
+    * has many users
+    * has and belongs to many orders
+  '''
+}
+
+Table shippers {
+  /*
+  Model: Shipper
+  has many orders, users
+  */
+  address string    
+  country integer [Note: 'enum']    
+  email string      
+  id integer [primary key]
+  name string       
+  phone string
+  Note: '''
+    Model: Shipper
+    * has many orders, users
+  '''
+}
+
+Table orders {  // customer view
+  /*
+  Model: Order
+  belongs to broker, shipper
+  has and belongs to many carriers
+  */
+  broker_id integer [ref: > brokers.id]
+  delivery_location string 
+  equipment_type integer [Note: 'enum']    
+  id integer [primary key]
+  pickup_date date 
+  pickup_location string 
+  shipper_id integer [ref: > shippers.id]
+  status integer [Note: 'enum']    
+  Note: '''
+    Model: Order
+    * belongs to broker, shipper
+    * has and belongs to many carriers
+  '''
+}
+
+Table users {
+  /* 
+  Model: User
+  belongs to shipper, carrier, broker
+  */
+  broker_id integer [ref: > brokers.id]
+  carrier_id integer [ref: > carriers.id]
+  email string
+  id integer [primary key]
+  name string
+  phone string
+  shipper_id integer [ref: > shippers.id]
+  Note: '''
+    Model: User
+    * belongs to shipper, carrier, broker
+  '''
+}
+
+// We need an associative (join) table due to many-to-many relationship between
+// orders and carriers.
+Table carriers_orders {
+  carrier_id integer [ref: <> carriers.id]
+  order_id integer   [ref: <> orders.id]
+  Note: '''
+    Associative table for the many-to-many relationship between orders and carriers.
+  '''
+}
+
+//----------------------------------------------//
+
+//// -- LEVEL 2
+//// -- Adding column settings
+
+
+//----------------------------------------------//
+
+//// -- Level 3 
+//// -- Enum, Indexes
+
+// Enum for 'products' table below
+
+// Indexes: You can define a single or multi-column index 
+
