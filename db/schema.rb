@@ -10,14 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_25_193225) do
-  create_table "loads", force: :cascade do |t|
-    t.string "pickup_location"
-    t.string "delivery_location"
-    t.date "pickup_date"
-    t.string "equipment_type"
-    t.string "shipper_phone"
-    t.string "shipper_email"
+ActiveRecord::Schema[7.0].define(version: 2023_03_30_172928) do
+  create_table "brokers", force: :cascade do |t|
+    t.string "address"
+    t.integer "country"
+    t.string "email"
+    t.string "mc"
+    t.string "name"
+    t.string "phone"
+    t.string "usdot"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "carriers", force: :cascade do |t|
+    t.string "address"
+    t.integer "country"
+    t.string "email"
+    t.string "mc"
+    t.string "name"
+    t.string "phone"
+    t.string "usdot"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "shippers", force: :cascade do |t|
+    t.string "address"
+    t.integer "country"
+    t.string "email"
+    t.string "name"
+    t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
