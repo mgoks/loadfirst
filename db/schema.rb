@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_31_205953) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_01_200109) do
   create_table "brokers", force: :cascade do |t|
     t.string "address"
     t.integer "country"
@@ -35,6 +35,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_205953) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.integer "carrier_id", null: false
+    t.string "delivery_address"
+    t.integer "equipment_type"
+    t.string "orderer_type", null: false
+    t.integer "orderer_id", null: false
+    t.date "pickup_date"
+    t.string "pickup_address"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["carrier_id"], name: "index_orders_on_carrier_id"
+    t.index ["orderer_type", "orderer_id"], name: "index_orders_on_orderer"
+  end
+
   create_table "shippers", force: :cascade do |t|
     t.string "address"
     t.integer "country"
@@ -57,4 +72,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_205953) do
     t.index ["org_type", "org_id"], name: "index_users_on_org"
   end
 
+  add_foreign_key "orders", "carriers"
 end
