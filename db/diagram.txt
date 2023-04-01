@@ -1,5 +1,4 @@
 ////////////////////////////////////////////////////////////////////////////////
-https://dbdiagram.io/d/642209cd5758ac5f17249058
 /*
 The type parameter is normally one of the migrations native types, which is one 
 of the following: 
@@ -31,11 +30,7 @@ https://guides.rubyonrails.org/active_record_basics.html#schema-conventions
 */
 
 Table brokers {
-  /*
-  Model: Broker
-  has many orders, users
-  */
-  address string    
+  address string [Note: 'Change type to hstore after migrating to PostgreSQL. https://medium.com/@webteamu/rails-best-practice-persisting-addresses-in-postgresql-e81329d3db7b']
   country integer [Note: 'enum']    
   email string      
   id integer [primary key]
@@ -45,16 +40,12 @@ Table brokers {
   usdot string
   Note: '''
     Model: Broker
-    * has many orders, users
+    * has many orders as orderer
+    * has many users as org
   '''
 }
 
 Table carriers {
-  /*
-  Model: Carrier
-  has many users
-  has and belongs to many orders
-  */
   address string    
   country integer [Note: 'enum']    
   email string      
@@ -65,16 +56,12 @@ Table carriers {
   usdot string
   Note: '''
     Model: Carrier
-    * has many users
-    * has and belongs to many orders
+    * has many users as org
+    * has many orders
   '''
 }
 
 Table shippers {
-  /*
-  Model: Shipper
-  has many orders, users
-  */
   address string    
   country integer [Note: 'enum']    
   email string      
@@ -83,59 +70,41 @@ Table shippers {
   phone string
   Note: '''
     Model: Shipper
-    * has many orders, users
+    * has many orders as orderer
+    * has many users as org
   '''
 }
 
 Table orders {  // customer view
-  /*
-  Model: Order
-  belongs to broker, shipper
-  has and belongs to many carriers
-  */
-  broker_id integer [ref: > brokers.id]
-  delivery_location string 
+  carrier_id integer [ref: > carriers.id]
+  delivery_address string 
   equipment_type integer [Note: 'enum']    
   id integer [primary key]
+  orderer_id integer [ref: > brokers.id, ref: > shippers.id]
+  orderer_type string
   pickup_date date 
-  pickup_location string 
-  shipper_id integer [ref: > shippers.id]
+  pickup_address string 
   status integer [Note: 'enum']    
   Note: '''
     Model: Order
-    * belongs to broker, shipper
-    * has and belongs to many carriers
+    * belongs to orderer (polymorphic)
+    * belongs to carrier
   '''
 }
 
 Table users {
-  /* 
-  Model: User
-  belongs to shipper, carrier, broker
-  */
-  broker_id integer [ref: > brokers.id]
-  carrier_id integer [ref: > carriers.id]
   email string
   id integer [primary key]
   name string
+  org_id integer [ref: > brokers.id, ref: > carriers.id, ref: > shippers.id]
+  org_type string
+  password digest
   phone string
-  shipper_id integer [ref: > shippers.id]
   Note: '''
     Model: User
-    * belongs to shipper, carrier, broker
+    * belongs to org (polymorphic)
   '''
 }
-
-// We need an associative (join) table due to many-to-many relationship between
-// orders and carriers.
-Table carriers_orders {
-  carrier_id integer [ref: <> carriers.id]
-  order_id integer   [ref: <> orders.id]
-  Note: '''
-    Associative table for the many-to-many relationship between orders and carriers.
-  '''
-}
-
 //----------------------------------------------//
 
 //// -- LEVEL 2
