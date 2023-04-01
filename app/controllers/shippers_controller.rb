@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ShippersController < ApplicationController
-  before_action :set_shipper, only: %i[ show edit update destroy ]
+  before_action :set_shipper, only: %i[show edit update destroy]
 
   # GET /shippers or /shippers.json
   def index
@@ -7,8 +9,7 @@ class ShippersController < ApplicationController
   end
 
   # GET /shippers/1 or /shippers/1.json
-  def show
-  end
+  def show; end
 
   # GET /shippers/new
   def new
@@ -16,8 +17,7 @@ class ShippersController < ApplicationController
   end
 
   # GET /shippers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /shippers or /shippers.json
   def create
@@ -25,11 +25,16 @@ class ShippersController < ApplicationController
 
     respond_to do |format|
       if @shipper.save
-        format.html { redirect_to shipper_url(@shipper), notice: "Shipper was successfully created." }
+        format.html do
+          redirect_to shipper_url(@shipper),
+                      notice: 'Shipper was successfully created.'
+        end
         format.json { render :show, status: :created, location: @shipper }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @shipper.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @shipper.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -38,11 +43,16 @@ class ShippersController < ApplicationController
   def update
     respond_to do |format|
       if @shipper.update(shipper_params)
-        format.html { redirect_to shipper_url(@shipper), notice: "Shipper was successfully updated." }
+        format.html do
+          redirect_to shipper_url(@shipper),
+                      notice: 'Shipper was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @shipper }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @shipper.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @shipper.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -52,19 +62,22 @@ class ShippersController < ApplicationController
     @shipper.destroy
 
     respond_to do |format|
-      format.html { redirect_to shippers_url, notice: "Shipper was successfully destroyed." }
+      format.html do
+        redirect_to shippers_url, notice: 'Shipper was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_shipper
-      @shipper = Shipper.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def shipper_params
-      params.require(:shipper).permit(:address, :country, :email, :name, :phone)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_shipper
+    @shipper = Shipper.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def shipper_params
+    params.require(:shipper).permit(:address, :country, :email, :name, :phone)
+  end
 end

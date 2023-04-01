@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class BrokersController < ApplicationController
-  before_action :set_broker, only: %i[ show edit update destroy ]
+  before_action :set_broker, only: %i[show edit update destroy]
 
   # GET /brokers or /brokers.json
   def index
@@ -7,8 +9,7 @@ class BrokersController < ApplicationController
   end
 
   # GET /brokers/1 or /brokers/1.json
-  def show
-  end
+  def show; end
 
   # GET /brokers/new
   def new
@@ -16,8 +17,7 @@ class BrokersController < ApplicationController
   end
 
   # GET /brokers/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /brokers or /brokers.json
   def create
@@ -25,11 +25,16 @@ class BrokersController < ApplicationController
 
     respond_to do |format|
       if @broker.save
-        format.html { redirect_to broker_url(@broker), notice: "Broker was successfully created." }
+        format.html do
+          redirect_to broker_url(@broker),
+                      notice: 'Broker was successfully created.'
+        end
         format.json { render :show, status: :created, location: @broker }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @broker.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @broker.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -38,11 +43,16 @@ class BrokersController < ApplicationController
   def update
     respond_to do |format|
       if @broker.update(broker_params)
-        format.html { redirect_to broker_url(@broker), notice: "Broker was successfully updated." }
+        format.html do
+          redirect_to broker_url(@broker),
+                      notice: 'Broker was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @broker }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @broker.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @broker.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -52,19 +62,23 @@ class BrokersController < ApplicationController
     @broker.destroy
 
     respond_to do |format|
-      format.html { redirect_to brokers_url, notice: "Broker was successfully destroyed." }
+      format.html do
+        redirect_to brokers_url, notice: 'Broker was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_broker
-      @broker = Broker.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def broker_params
-      params.require(:broker).permit(:address, :country, :email, :mc, :name, :phone, :usdot)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_broker
+    @broker = Broker.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def broker_params
+    params.require(:broker).permit(:address, :country, :email, :mc, :name,
+                                   :phone, :usdot)
+  end
 end
