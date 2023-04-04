@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  carrier: one
+  delivery_address: MyString
+  equipment_type: 1
+  orderer: one
+  orderer_type: Shipper
+  pickup_date: 2023-04-01
+  pickup_address: MyString
+  status: 1
+
+two:
+  carrier: two
+  delivery_address: MyString
+  equipment_type: 1
+  orderer: two
+  orderer_type: Broker
+  pickup_date: 2023-04-01
+  pickup_address: MyString
+  status: 1
