@@ -1,4 +1,5 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Read about fixtures at
+# https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
   carrier: one
@@ -19,3 +20,14 @@ two:
   pickup_date: 2023-04-01
   pickup_address: MyString
   status: 1
+
+valid_order_from_natures_touch:
+  carrier: 
+  delivery_address: 50 QUEEN ELIZABETH BLVD ETOBICOKE, ON M8Z 1M1
+  equipment_type: 1
+  orderer: ShipCurve
+  orderer_type: Broker
+  pickup_date: 2023-04-01
+  pickup_address: 5105M R. Fisher, Saint-Laurent, QC H4T 1J8
+  status: 1
+
