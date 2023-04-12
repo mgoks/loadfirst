@@ -1,14 +1,50 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <aside id="notice"><%= notice %></aside>
+<% end %>
 
 <h1>Orders</h1>
 
-<div id="orders">
-  <% @orders.each do |order| %>
-    <%= render order %>
-    <p>
-      <%= link_to "Show this order", order %>
-    </p>
-  <% end %>
-</div>
+<table>
+  <tfoot>
+    <tr>
+      <td colspan="3">
+        <%= link_to 'New Order', new_order_path %>
+      </td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
 
-<%= link_to "New order", new_order_path %>
+      <!-- This currently shows something like this:
+
+        Carrier: 8
+        Delivery address: 5105M Fisher Street Saint-Laurent, QC H4T 1J8 Canada
+        Equipment type: 0
+        Orderer: 8
+        Pickup date: 2023-05-01
+        Pickup address: 975 Pacific Gate unit 18, Mississauga, ON L5T 1Y1
+        Status: 0
+
+        TODO: Improve this to show the actual values instead of the IDs
+      -->
+        <td class="description">
+          <%= render order %>
+        </td>
+
+        <td class="actions">
+          <ul>
+            <li><%= link_to 'Show', order %></li>
+            <li><%= link_to 'Edit', edit_order_path(order) %></li>
+            <li>
+              <%= link_to 'Destroy',
+                           order, 
+                          method: :delete,
+                          data: { confirm: 'Are you sure?' } %>
+            </li>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
